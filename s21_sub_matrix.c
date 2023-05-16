@@ -8,12 +8,11 @@ int s21_sub_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
       if (result == NULL || result->rows != A->rows ||
           result->columns != A->columns) {
         s21_create_matrix(A->rows, A->columns, result);
-      } else {
-        for (int i = 0; i < result->rows; i++) {
-          for (int j = 0; j < result->columns; j++) {
-            result->matrix[i][j] = A->matrix[i][j] - B->matrix[i][j];
-            ERROR = OK;
-          }
+      }
+      for (int i = 0; i < result->rows; i++) {
+        for (int j = 0; j < result->columns; j++) {
+          result->matrix[i][j] = A->matrix[i][j] - B->matrix[i][j];
+          ERROR = OK;
         }
       }
     }

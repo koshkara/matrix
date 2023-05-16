@@ -1,6 +1,6 @@
 #include <check.h>
 #include "s21_matrix.h"
-#include "stdio.h"
+#include <stdio.h>
 
 START_TEST(create_matrix_1) {
   int rows = 5;
@@ -70,13 +70,20 @@ START_TEST(sum_matrix_0) {
   s21_create_matrix(1, 2, &A);
   s21_create_matrix(1, 2, &B);
   s21_create_matrix(1, 1, &result);
-  s21_sum_matrix(&A, &B, &result);
-  for (int i = 0; i < result.rows; i++) {
-    for (int j = 0; j < result.columns; j++) {
-      if (result.matrix[i][j] == A.matrix[i][j] + B.matrix[i][j]) {
-        ERROR = OK;
-      } else {
-        ERROR = FAIL;
+  for (int i = 0; i < A.rows; i++) {
+    for (int j = 0; j < A.columns; j++) {
+      A.matrix[i][j] = 125 + B.columns + i;
+      B.matrix[i][j] = 130 + A.rows + j;
+    }
+  }
+  if (s21_sum_matrix(&A, &B, &result) == 0) {
+    for (int i = 0; i < result.rows; i++) {
+      for (int j = 0; j < result.columns; j++) {
+        if (result.matrix[i][j] == 125 + B.columns + i + 130 + A.rows + j) {
+          ERROR = OK;
+        } else {
+          ERROR = FAIL;
+        }
       }
     }
   }
@@ -89,13 +96,20 @@ START_TEST(sum_matrix_1) {
   s21_create_matrix(1, 2, &A);
   s21_create_matrix(1, 2, &B);
   s21_create_matrix(1, 2, &result);
-  s21_sum_matrix(&A, &B, &result);
   for (int i = 0; i < result.rows; i++) {
     for (int j = 0; j < result.columns; j++) {
-      if (result.matrix[i][j] == A.matrix[i][j] + B.matrix[i][j]) {
-        ERROR = OK;
-      } else {
-        ERROR = FAIL;
+      A.matrix[i][j] = 125 + B.columns + i;
+      B.matrix[i][j] = 130 + A.rows + j;
+    }
+  }
+  if (s21_sum_matrix(&A, &B, &result) == 0) {
+    for (int i = 0; i < result.rows; i++) {
+      for (int j = 0; j < result.columns; j++) {
+        if (result.matrix[i][j] == 125 + B.columns + i + 130 + A.rows + j) {
+          ERROR = OK;
+        } else {
+          ERROR = FAIL;
+        }
       }
     }
   }
@@ -108,10 +122,16 @@ START_TEST(sub_matrix_0) {
   s21_create_matrix(1, 2, &A);
   s21_create_matrix(1, 2, &B);
   s21_create_matrix(1, 1, &result);
+  for (int i = 0; i < A.rows; i++) {
+    for (int j = 0; j < A.columns; j++) {
+      A.matrix[i][j] = 125 + B.columns + i;
+      B.matrix[i][j] = 130 + A.rows + j;
+    }
+  }
   s21_sub_matrix(&A, &B, &result);
   for (int i = 0; i < result.rows; i++) {
     for (int j = 0; j < result.columns; j++) {
-      if (result.matrix[i][j] == A.matrix[i][j] - B.matrix[i][j]) {
+      if (result.matrix[i][j] == 125 + B.columns + i - 130 - A.rows - j) {
         ERROR = OK;
       } else {
         ERROR = FAIL;
@@ -127,10 +147,16 @@ START_TEST(sub_matrix_1) {
   s21_create_matrix(1, 2, &A);
   s21_create_matrix(1, 2, &B);
   s21_create_matrix(1, 2, &result);
+  for (int i = 0; i < result.rows; i++) {
+    for (int j = 0; j < result.columns; j++) {
+      A.matrix[i][j] = 125 + B.columns + i;
+      B.matrix[i][j] = 130 + A.rows + j;
+    }
+  }
   s21_sub_matrix(&A, &B, &result);
   for (int i = 0; i < result.rows; i++) {
     for (int j = 0; j < result.columns; j++) {
-      if (result.matrix[i][j] == A.matrix[i][j] - B.matrix[i][j]) {
+      if (result.matrix[i][j] == 125 + B.columns + i - 130 - A.rows - j) {
         ERROR = OK;
       } else {
         ERROR = FAIL;
@@ -146,10 +172,15 @@ START_TEST(mult_number_matrix_0) {
   double number = 9.938575839;
   s21_create_matrix(1, 2, &A);
   s21_create_matrix(1, 2, &result);
+  for (int i = 0; i < result.rows; i++) {
+    for (int j = 0; j < result.columns; j++) {
+      A.matrix[i][j] = 125 + A.columns + i;
+    }
+  }
   s21_mult_number(&A, number, &result);
   for (int i = 0; i < result.rows; i++) {
     for (int j = 0; j < result.columns; j++) {
-      if (result.matrix[i][j] == A.matrix[i][j] * number) {
+      if (result.matrix[i][j] == (125 + A.columns + i) * number) {
         ERROR = OK;
       } else {
         ERROR = FAIL;
@@ -165,10 +196,15 @@ START_TEST(mult_number_matrix_1) {
   double number = 9.938575839;
   s21_create_matrix(1, 2, &A);
   s21_create_matrix(1, 1, &result);
+  for (int i = 0; i < A.rows; i++) {
+    for (int j = 0; j < A.columns; j++) {
+      A.matrix[i][j] = 125 + A.columns + i;
+    }
+  }
   s21_mult_number(&A, number, &result);
   for (int i = 0; i < result.rows; i++) {
     for (int j = 0; j < result.columns; j++) {
-      if (result.matrix[i][j] == A.matrix[i][j] * number) {
+      if (result.matrix[i][j] == (125 + A.columns + i) * number) {
         ERROR = OK;
       } else {
         ERROR = FAIL;
@@ -176,6 +212,32 @@ START_TEST(mult_number_matrix_1) {
     }
   }
   ck_assert_int_eq(0, ERROR);
+}
+END_TEST
+
+START_TEST(mult_matrix_1) {
+  matrix_t A, B, result;
+  s21_create_matrix(2, 2, &A);
+  s21_create_matrix(2, 2, &B);
+  for (int i = 0; i < A.rows; i++) {
+    for (int j = 0; j < A.columns; j++) {
+      A.matrix[i][j] = 125 + B.columns + i;
+      B.matrix[i][j] = 130 + A.rows + j;
+      printf("%f ", B.matrix[i][j]);
+    } puts("");
+  }
+  s21_mult_matrix(&A, &B, &result);
+  ERROR = FAIL;
+  if (result.matrix[0][0] == 33528) {
+    if (result.matrix[0][1] == 33782) {
+      if (result.matrix[1][0] == 33792) {
+        if (result.matrix[1][1] == 34048) {
+          ERROR = OK;
+        }
+      }
+    }
+  }
+  ck_assert_int_eq (0, ERROR);
 }
 END_TEST
 
@@ -197,6 +259,7 @@ Suite *s21_matrix_suite(void) {
   tcase_add_test(tc_core, sub_matrix_1);
   tcase_add_test(tc_core, mult_number_matrix_0);
   tcase_add_test(tc_core, mult_number_matrix_1);
+  tcase_add_test(tc_core, mult_matrix_1);
 
   suite_add_tcase(s, tc_core);
 
