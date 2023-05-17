@@ -223,8 +223,7 @@ START_TEST(mult_matrix_1) {
     for (int j = 0; j < A.columns; j++) {
       A.matrix[i][j] = 125 + B.columns + i;
       B.matrix[i][j] = 130 + A.rows + j;
-      printf("%f ", B.matrix[i][j]);
-    } puts("");
+    }
   }
   s21_mult_matrix(&A, &B, &result);
   ERROR = FAIL;
@@ -233,6 +232,39 @@ START_TEST(mult_matrix_1) {
       if (result.matrix[1][0] == 33792) {
         if (result.matrix[1][1] == 34048) {
           ERROR = OK;
+        }
+      }
+    }
+  }
+  ck_assert_int_eq (0, ERROR);
+}
+END_TEST
+
+START_TEST(transpose_1) {
+  matrix_t A, result;
+  s21_create_matrix(2, 4, &A);
+  for (int i = 0; i < A.rows; i++) {
+    for (int j = 0; j < A.columns; j++) {
+      A.matrix[i][j] = 125 + A.columns + j;
+      printf("%f ", A.matrix[i][j]);
+    }
+    puts("");
+  }
+  s21_transpose(&A, &result);
+  ERROR = FAIL;
+  if (result.matrix[0][0] == 129) {
+    if (result.matrix[0][1] == 129) {
+      if (result.matrix[1][0] == 130) {
+        if (result.matrix[1][1] == 130) {
+          if (result.matrix[2][0] == 131) {
+            if (result.matrix[2][1] == 131) {
+              if (result.matrix[3][0] == 132) {
+                if (result.matrix[3][1] == 132) {
+                  ERROR = OK;
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -260,6 +292,7 @@ Suite *s21_matrix_suite(void) {
   tcase_add_test(tc_core, mult_number_matrix_0);
   tcase_add_test(tc_core, mult_number_matrix_1);
   tcase_add_test(tc_core, mult_matrix_1);
+  tcase_add_test(tc_core, transpose_1);
 
   suite_add_tcase(s, tc_core);
 

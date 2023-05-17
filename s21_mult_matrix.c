@@ -1,5 +1,4 @@
 #include "s21_matrix.h"
-#include <stdio.h>
 
 int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
   ERROR = FAIL;
@@ -15,8 +14,7 @@ int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
           result->matrix[i][j] += A->matrix[i][n] * B->matrix[n][j];
           ERROR = OK;
         }
-        printf("%f ", result->matrix[i][j]);
-      } puts("");
+      }
     }
   } return ERROR;
 }
