@@ -246,9 +246,7 @@ START_TEST(transpose_1) {
   for (int i = 0; i < A.rows; i++) {
     for (int j = 0; j < A.columns; j++) {
       A.matrix[i][j] = 125 + A.columns + j;
-      printf("%f ", A.matrix[i][j]);
     }
-    puts("");
   }
   s21_transpose(&A, &result);
   ERROR = FAIL;
@@ -273,6 +271,110 @@ START_TEST(transpose_1) {
 }
 END_TEST
 
+//START_TEST(complements) {
+//  matrix_t A, result;
+//  s21_create_matrix(4, 4, &A);
+//  for (int i = 0; i < A.rows; i++) {
+//    for (int j = 0; j < A.columns; j++) {
+//      A.matrix[i][j] = 125 + A.columns + j + i;
+//      printf("%f ", A.matrix[i][j]);
+//    }
+//    puts("");
+//  }
+//  s21_calc_complements(&A, &result);
+//  ERROR = FAIL;
+//  if (result.matrix[0][0] == 129) {
+//    if (result.matrix[0][1] == 129) {
+//      if (result.matrix[1][0] == 130) {
+//        if (result.matrix[1][1] == 130) {
+//          if (result.matrix[2][0] == 131) {
+//            if (result.matrix[2][1] == 131) {
+//              if (result.matrix[3][0] == 132) {
+//                if (result.matrix[3][1] == 132) {
+//                  ERROR = OK;
+//                }
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
+//  ck_assert_int_eq (0, ERROR);
+//}
+//END_TEST
+
+START_TEST(determinant) {
+  matrix_t A;
+  double result;
+  s21_create_matrix(5, 5, &A);
+  A.matrix[0][0] = 5;
+  A.matrix[0][1] = 15;
+  A.matrix[0][2] = 87;
+  A.matrix[0][3] = -9;
+  A.matrix[0][4] = 9;
+  A.matrix[1][0] = 9.3;
+  A.matrix[1][1] = -0.7;
+  A.matrix[1][2] = -13.56;
+  A.matrix[1][3] = 78;
+  A.matrix[1][4] = 98;
+  A.matrix[2][0] = 23;
+  A.matrix[2][1] = -10;
+  A.matrix[2][2] = -9.7;
+  A.matrix[2][3] = 0.45;
+  A.matrix[2][4] = 6.76;
+  A.matrix[3][0] = 4.76;
+  A.matrix[3][1] = -0.34;
+  A.matrix[3][2] = -90;
+  A.matrix[3][3] = -56;
+  A.matrix[3][4] = 34;
+  A.matrix[4][0] = 43;
+  A.matrix[4][1] = 23;
+  A.matrix[4][2] = 4.5;
+  A.matrix[4][3] = 6.2;
+  A.matrix[4][4] = 6.2;
+  s21_determinant(&A, &result);
+  printf("%f", result);
+  puts("");
+  ck_assert_double_eq (1, round(result/-769115573.031481));
+}
+END_TEST
+
+START_TEST(determinant1) {
+  matrix_t A;
+  double result;
+  s21_create_matrix(3, 3, &A);
+  A.matrix[0][0] = 5;
+  A.matrix[0][1] = 15;
+  A.matrix[0][2] = 87;
+  A.matrix[1][0] = 9.3;
+  A.matrix[1][1] = -0.7;
+  A.matrix[1][2] = -13.56;
+  A.matrix[2][0] = 23;
+  A.matrix[2][1] = -10;
+  A.matrix[2][2] = -9.7;
+  s21_determinant(&A, &result);
+  printf("%f", result);
+  puts("");
+  ck_assert_double_eq (1, round(result/-10659.4));
+}
+END_TEST
+
+START_TEST(determinant2) {
+  matrix_t A;
+  double result;
+  s21_create_matrix(2, 2, &A);
+  A.matrix[0][0] = 5;
+  A.matrix[0][1] = 15;
+  A.matrix[1][0] = 9.3;
+  A.matrix[1][1] = -0.7;
+  s21_determinant(&A, &result);
+  printf("%f", result);
+  puts("");
+  ck_assert_double_eq (1, round(result/-143));
+}
+END_TEST
+
 Suite *s21_matrix_suite(void) {
   Suite *s;
   TCase *tc_core;
@@ -293,7 +395,10 @@ Suite *s21_matrix_suite(void) {
   tcase_add_test(tc_core, mult_number_matrix_1);
   tcase_add_test(tc_core, mult_matrix_1);
   tcase_add_test(tc_core, transpose_1);
-
+//  tcase_add_test(tc_core, complements);
+  tcase_add_test(tc_core, determinant);
+  tcase_add_test(tc_core, determinant1);
+  tcase_add_test(tc_core, determinant2);
   suite_add_tcase(s, tc_core);
 
   return s;

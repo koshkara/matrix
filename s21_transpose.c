@@ -5,8 +5,7 @@ int s21_transpose(matrix_t *A, matrix_t *result)
   ERROR = FAIL;
   if (A != NULL && A->rows > 0 && A->columns > 0)
   {
-    if (result == NULL || result->rows != A->columns || result->columns !=
-                                                            A->rows)
+    if (result == NULL || result->rows != A->columns || result->columns != A->rows)
     {
       s21_create_matrix(A->columns, A->rows, result);
     }

@@ -4,8 +4,7 @@ int s21_mult_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
   ERROR = FAIL;
   if (A != NULL && B != NULL && A->rows > 0 && A->columns > 0 && B->columns > 0
       && A->columns == B->rows) {
-    if (result == NULL || result->rows != A->rows ||
-        result->columns != B->columns) {
+    if (result == NULL || result->rows != A->rows || result->columns != B->columns) {
       s21_create_matrix(A->rows, B->columns, result);
     }
     for (int i = 0; i < result->rows; i++) {
