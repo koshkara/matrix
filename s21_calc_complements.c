@@ -7,7 +7,7 @@ int s21_calc_complements(matrix_t *A, matrix_t *result)
   matrix_t minor;
   double value;
   s21_create_matrix(A->rows - 1, A->columns - 1, &minor);
-  if ( A != NULL && A->rows == A->columns && A->columns > 0) {
+  if (A->rows == A->columns && A->columns > 0) {
     if (result == NULL || result->rows != A->rows || result->columns != A->columns) {
       s21_create_matrix(A->rows, A->columns, result);
     }

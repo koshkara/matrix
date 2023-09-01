@@ -22,20 +22,5 @@ gcov_report: test
 	genhtml coverage.info --output-directory out
 
 rebuild: clean all
-clang:
-	cp ../materials/linters/.clang-format ./
-	clang-fornat -n *.c *.h
-leaks:
-	leaks -atExit -- ./test | grep LEAK
-valgrind:
-	valgrind --leak-check=full \
-		--show-leak-kinds=all \
-		--track-origins=yes \
-		--verbose \
-		--log-file=valgrind-out.txt \
-		./test exampleParam1
 cppcheck:
 	cppcheck --enable=all --suppress=missingIncludeSystem ./
-docker:
-	cd ../materials/build/
-	bash run.sh

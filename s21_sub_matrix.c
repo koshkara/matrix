@@ -5,7 +5,7 @@ int s21_sub_matrix(matrix_t *A, matrix_t *B, matrix_t *result) {
   if (A != NULL && B != NULL && A->rows > 0 && A->columns > 0 && B->rows > 0 &&
       B->columns > 0) {
     if (A->rows == B->rows && A->columns == B->columns) {
-      if (result == NULL || result->rows != A->rows ||
+      if (result->rows != A->rows ||
           result->columns != A->columns) {
         s21_create_matrix(A->rows, A->columns, result);
       }

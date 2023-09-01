@@ -6,9 +6,8 @@ int s21_inverse_matrix (matrix_t *A, matrix_t *result) {
   double determinant;
   matrix_t minor;
   s21_create_matrix(A->rows, A->columns, &minor);
-  if (A != NULL && A->rows == A->columns && A->columns > 0) {
-    if (result == NULL || result->rows != A->rows || result->columns !=
-                                                         A->columns) {
+  if (A->rows == A->columns && A->columns > 0) {
+    if (result->rows != A->rows || result->columns != A->columns) {
       s21_create_matrix(A->rows, A->columns, result);
     }
     if (s21_determinant(A, &determinant) == 0) {
